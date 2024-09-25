@@ -606,6 +606,9 @@ async def texttoxql(request: texttosqlRequest):
 
     queryfromwatsonx = watsonxSQLResponse.replace('Output:','').replace(';','')
     
+    if "SELECT" not in queryfromwatsonx:
+        return None
+
     print("parsed query : " + queryfromwatsonx)
     
     output_json_str = await queryexec(queryfromwatsonx, dbtype)
@@ -685,7 +688,32 @@ async def watsonchat(request: watsonchatRequest, api_key: str = Security(get_api
         
         texttosqlRequestInstance = texttosqlRequest (question=query, dbtype=request.dbtype, llmparams=llmparams)
         texttoxqlresponse= await texttoxql(texttosqlRequestInstance)
-        return watsonchatResponse(response=texttoxqlresponse.response )
+
+        if texttoxqlresponse == None:
+            moderations = Moderations (hap_input=ragllm_params.parameters.moderations.hap_input,
+                                   hap_output=ragllm_params.parameters.moderations.hap_output,
+                                   threshold=ragllm_params.parameters.moderations.threshold)
+            
+            paramters = Parameters (decoding_method=ragllm_params.parameters.decoding_method, 
+                                    min_new_tokens=ragllm_params.parameters.min_new_tokens,
+                                    max_new_tokens=ragllm_params.parameters.max_new_tokens,
+                                    repetition_penalty=ragllm_params.parameters.repetition_penalty,
+                                    temperature=ragllm_params.parameters.temperature,
+                                    top_k=ragllm_params.parameters.top_k,
+                                    top_p=ragllm_params.parameters.top_p,
+                                    moderations=moderations)
+            
+            llmparams = LLMParams (model_id=ragllm_params.model_id, paramters=paramters)
+
+            queryLLMRequestInstance = queryLLMRequest (question=query, 
+                                                    es_index_name=index_name, 
+                                                    es_model_name=es_model_name,
+                                                    llmparams=llmparams)
+            queryLLMresponse= await queryLLM(queryLLMRequestInstance, api_key)
+            return watsonchatResponse(response=queryLLMresponse.llm_response)
+
+        watsonxRephrasedResponse = watsonx(query+","+texttoxqlresponse.response,"promptJSON", llmparams)
+        return watsonchatResponse(response=watsonxRephrasedResponse)
     else:
 
         moderations = Moderations (hap_input=generalllm_params.parameters.moderations.hap_input,
