@@ -55,6 +55,8 @@ from customTypes.watsonchatRequest import LLMParams,Parameters,Moderations
 
 app = FastAPI()
 
+app.openapi_version = "3.0.2"
+
 # Set up CORS
 origins = ["*"]
 
