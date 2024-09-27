@@ -608,7 +608,7 @@ async def texttoxql(request: texttosqlRequest):
 
     queryfromwatsonx = watsonxSQLResponse.replace('Output:','').replace(';','')
     
-    if "SELECT" not in queryfromwatsonx:
+    if "select" not in queryfromwatsonx.lower():
         return None
 
     print("parsed query : " + queryfromwatsonx)
@@ -776,7 +776,7 @@ async def classify(request: classifyRequest):
     print(request.nl)
     query = request.nl
 
-    watsonxSQLResponse = watsonx (query,"promptClassify", "meta-llama/llama-2-13b-chat")
+    watsonxSQLResponse = watsonx (query,"promptClassify", "meta-llama/llama-3-13b-chat")
    
     classify = [{'Classify': watsonxSQLResponse}]
     classification = ""
