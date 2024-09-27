@@ -1,62 +1,51 @@
 {
-  "openapi": "3.0.2",
+  "openapi": "3.0.0",
   "info": {
     "title": "FastAPI",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "description": "WxD & WD Rag application with wx.ai"
   },
+  "servers": [
+    {
+      "url": "https://dms-text2sql-jsonupdated.1lnqlhl9zx33.us-south.codeengine.appdomain.cloud/"
+    }
+  ],
   "paths": {
-    "/": {
-      "get": {
-        "summary": "Index",
-        "operationId": "index__get",
+    "/watsonchat": {
+      "post": {
         "responses": {
           "200": {
-            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {}
               }
-            }
-          }
-        }
-      }
-    },
-    "/ingestDocs": {
-      "post": {
-        "summary": "Ingestdocs",
-        "operationId": "ingestDocs_ingestDocs_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ingestRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ingestResponse"
-                }
-              }
-            }
+            },
+            "description": "Successful Response"
           },
           "422": {
-            "description": "Validation Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/watsonchatRequest"
+              }
             }
           }
         },
+        "description": "Query WxD and wxai.",
+        "summary": "watsonchat",
+        "operationId": "watsonchat_watsonchat_post",
         "security": [
           {
             "APIKeyHeader": []
@@ -66,40 +55,41 @@
     },
     "/queryLLM": {
       "post": {
-        "summary": "Queryllm",
-        "operationId": "queryLLM_queryLLM_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/queryLLMRequest"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
-            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/queryLLMResponse"
                 }
               }
-            }
+            },
+            "description": "Successful Response"
           },
           "422": {
-            "description": "Validation Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/queryLLMRequest"
+              }
             }
           }
         },
+        "description": "Query WxD and wxai.",
+        "summary": "Queryllm",
+        "operationId": "queryLLM_queryLLM_post",
         "security": [
           {
             "APIKeyHeader": []
@@ -109,264 +99,158 @@
     },
     "/queryWDLLM": {
       "post": {
-        "summary": "Querywdllm",
-        "operationId": "queryWDLLM_queryWDLLM_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/queryWDLLMRequest"
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
-            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/queryWDLLMResponse"
                 }
               }
-            }
+            },
+            "description": "Successful Response"
           },
           "422": {
-            "description": "Validation Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/queryWDLLMRequest"
+              }
             }
           }
         },
+        "summary": "QueryWDllm",
+        "operationId": "queryLLM_queryWDLLM_post",
+        "description": "Query WD and wxai.",
         "security": [
           {
             "APIKeyHeader": []
           }
         ]
-      }
-    },
-    "/texttoxql": {
-      "post": {
-        "summary": "Texttoxql",
-        "operationId": "texttoxql_texttoxql_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/texttosqlRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/watsonchat": {
-      "post": {
-        "summary": "Watsonchat",
-        "operationId": "watsonchat_watsonchat_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/watsonchatRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "APIKeyHeader": []
-          }
-        ]
-      }
-    },
-    "/classify": {
-      "post": {
-        "summary": "Classify",
-        "operationId": "classify_classify_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/classifyRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "RAG-APP-API-Key"
+      }
+    },
     "schemas": {
       "HTTPValidationError": {
+        "type": "object",
         "properties": {
           "detail": {
+            "type": "array",
             "items": {
               "$ref": "#/components/schemas/ValidationError"
             },
-            "type": "array",
             "title": "Detail"
           }
         },
-        "type": "object",
         "title": "HTTPValidationError"
       },
-      "Moderations": {
-        "properties": {
-          "hap_input": {
-            "type": "string",
-            "title": "Hap Input",
-            "default": "true"
-          },
-          "threshold": {
-            "type": "number",
-            "title": "Threshold",
-            "default": 0.75
-          },
-          "hap_output": {
-            "type": "string",
-            "title": "Hap Output",
-            "default": "true"
-          }
-        },
+      "LLMParams": {
         "type": "object",
-        "title": "Moderations"
-      },
-      "Parameters": {
         "properties": {
-          "decoding_method": {
+          "model_id": {
             "type": "string",
-            "title": "Decoding Method",
-            "default": "greedy"
+            "title": "Model Id",
+            "default": "meta-llama/llama-3-70b-instruct"
           },
-          "min_new_tokens": {
-            "type": "integer",
-            "title": "Min New Tokens",
-            "default": 1
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "title": "Inputs",
+            "default": []
           },
-          "max_new_tokens": {
-            "type": "integer",
-            "title": "Max New Tokens",
-            "default": 500
-          },
-          "repetition_penalty": {
-            "type": "number",
-            "title": "Repetition Penalty",
-            "default": 1.1
-          },
-          "temperature": {
-            "type": "number",
-            "title": "Temperature",
-            "default": 0.7
-          },
-          "top_k": {
-            "type": "integer",
-            "title": "Top K",
-            "default": 50
-          },
-          "top_p": {
-            "type": "integer",
-            "title": "Top P",
-            "default": 1
-          },
-          "moderations": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Moderations"
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "decoding_method": {
+                "type": "string",
+                "title": "Decoding Method",
+                "default": "greedy"
+              },
+              "min_new_tokens": {
+                "type": "integer",
+                "title": "Min New Tokens",
+                "default": 1
+              },
+              "max_new_tokens": {
+                "type": "integer",
+                "title": "Max New Tokens",
+                "default": 500
+              },
+              "repetition_penalty": {
+                "type": "number",
+                "title": "Repetition Penalty",
+                "default": 1.1
+              },
+              "temperature": {
+                "type": "number",
+                "title": "Temperature",
+                "default": 0.7
+              },
+              "top_k": {
+                "type": "integer",
+                "title": "Top K",
+                "default": 50
+              },
+              "top_p": {
+                "type": "integer",
+                "title": "Top P",
+                "default": 1
+              },
+              "moderations": {
+                "type": "object",
+                "properties": {
+                  "hap_input": {
+                    "type": "string",
+                    "title": "Hap Input",
+                    "default": "true"
+                  },
+                  "threshold": {
+                    "type": "number",
+                    "title": "Threshold",
+                    "default": 0.75
+                  },
+                  "hap_output": {
+                    "type": "string",
+                    "title": "Hap Output",
+                    "default": "true"
+                  }
+                }
               }
-            ],
-            "default": {
-              "hap_input": "true",
-              "threshold": 0.75,
-              "hap_output": "true"
             }
           }
         },
-        "type": "object",
-        "title": "Parameters"
+        "title": "LLMParams"
       },
       "ValidationError": {
+        "type": "object",
         "properties": {
           "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
             "type": "array",
+            "items": {
+              "type": "string"
+            },
             "title": "Location"
           },
           "msg": {
@@ -378,7 +262,6 @@
             "title": "Error Type"
           }
         },
-        "type": "object",
         "required": [
           "loc",
           "msg",
@@ -386,237 +269,8 @@
         ],
         "title": "ValidationError"
       },
-      "classifyRequest": {
-        "properties": {
-          "nl": {
-            "type": "string",
-            "title": "NL Question",
-            "description": "Question asked by the user."
-          }
-        },
-        "type": "object",
-        "required": [
-          "nl"
-        ],
-        "title": "classifyRequest"
-      },
-      "customTypes__queryLLMRequest__LLMParams": {
-        "properties": {
-          "model_id": {
-            "type": "string",
-            "title": "Model Id",
-            "default": "meta-llama/llama-3-70b-instruct"
-          },
-          "inputs": {
-            "items": {},
-            "type": "array",
-            "title": "Inputs",
-            "default": []
-          },
-          "parameters": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Parameters"
-              }
-            ],
-            "default": {
-              "decoding_method": "greedy",
-              "min_new_tokens": 1,
-              "max_new_tokens": 500,
-              "repetition_penalty": 1.1,
-              "temperature": 0.7,
-              "top_k": 50,
-              "top_p": 1,
-              "moderations": {
-                "hap_input": "true",
-                "hap_output": "true",
-                "threshold": 0.75
-              }
-            }
-          }
-        },
-        "type": "object",
-        "title": "LLMParams"
-      },
-      "customTypes__queryWDLLMRequest__LLMParams": {
-        "properties": {
-          "model_id": {
-            "type": "string",
-            "title": "Model Id",
-            "default": "meta-llama/llama-3-70b-instruct"
-          },
-          "inputs": {
-            "items": {},
-            "type": "array",
-            "title": "Inputs",
-            "default": []
-          },
-          "parameters": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Parameters"
-              }
-            ],
-            "default": {
-              "decoding_method": "greedy",
-              "min_new_tokens": 1,
-              "max_new_tokens": 500,
-              "repetition_penalty": 1.1,
-              "temperature": 0.7,
-              "top_k": 50,
-              "top_p": 1,
-              "moderations": {
-                "hap_input": "true",
-                "hap_output": "true",
-                "threshold": 0.75
-              }
-            }
-          }
-        },
-        "type": "object",
-        "title": "LLMParams"
-      },
-      "customTypes__texttosqlRequest__LLMParams": {
-        "properties": {
-          "model_id": {
-            "type": "string",
-            "title": "Model Id",
-            "default": "meta-llama/llama-3-70b-instruct"
-          },
-          "inputs": {
-            "items": {},
-            "type": "array",
-            "title": "Inputs",
-            "default": []
-          },
-          "parameters": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Parameters"
-              }
-            ],
-            "default": {
-              "decoding_method": "greedy",
-              "min_new_tokens": 1,
-              "max_new_tokens": 500,
-              "repetition_penalty": 1.1,
-              "temperature": 0.7,
-              "top_k": 50,
-              "top_p": 1,
-              "moderations": {
-                "hap_input": "true",
-                "hap_output": "true",
-                "threshold": 0.75
-              }
-            }
-          }
-        },
-        "type": "object",
-        "title": "LLMParams"
-      },
-      "customTypes__watsonchatRequest__LLMParams": {
-        "properties": {
-          "model_id": {
-            "type": "string",
-            "title": "Model Id",
-            "default": "meta-llama/llama-3-70b-instruct"
-          },
-          "inputs": {
-            "items": {},
-            "type": "array",
-            "title": "Inputs",
-            "default": []
-          },
-          "parameters": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Parameters"
-              }
-            ],
-            "default": {
-              "decoding_method": "greedy",
-              "min_new_tokens": 1,
-              "max_new_tokens": 500,
-              "repetition_penalty": 1.1,
-              "temperature": 0.7,
-              "top_k": 50,
-              "top_p": 1,
-              "moderations": {
-                "hap_input": "true",
-                "hap_output": "true",
-                "threshold": 0.75
-              }
-            }
-          }
-        },
-        "type": "object",
-        "title": "LLMParams"
-      },
-      "ingestRequest": {
-        "properties": {
-          "bucket_name": {
-            "type": "string",
-            "title": "COS Bucket Name",
-            "description": "Name of your cloud object storage bucket."
-          },
-          "es_index_name": {
-            "type": "string",
-            "title": "ElasticSearch Index Name",
-            "description": "Name of the elasticsearch index you want to create."
-          },
-          "es_pipeline_name": {
-            "type": "string",
-            "title": "ElasticSearch Pipeline Name",
-            "description": "Name of the elasticsearch pipeline you want to create."
-          },
-          "chunk_size": {
-            "type": "string",
-            "title": "Chunk Size",
-            "default": "512"
-          },
-          "chunk_overlap": {
-            "type": "string",
-            "title": "Chunk Overlap",
-            "default": "256"
-          },
-          "es_model_name": {
-            "type": "string",
-            "title": "Es Model Name",
-            "default": ".elser_model_1"
-          },
-          "es_model_text_field": {
-            "type": "string",
-            "title": "Es Model Text Field",
-            "default": "text_field"
-          },
-          "es_index_text_field": {
-            "type": "string",
-            "title": "Es Index Text Field",
-            "default": "body_content_field"
-          }
-        },
-        "type": "object",
-        "required": [
-          "bucket_name",
-          "es_index_name",
-          "es_pipeline_name"
-        ],
-        "title": "ingestRequest"
-      },
-      "ingestResponse": {
-        "properties": {
-          "response": {
-            "type": "string",
-            "title": "Response"
-          }
-        },
-        "type": "object",
-        "required": [
-          "response"
-        ],
-        "title": "ingestResponse"
-      },
       "queryLLMRequest": {
+        "type": "object",
         "properties": {
           "question": {
             "type": "string",
@@ -636,6 +290,11 @@
             "title": "Es Model Name",
             "default": ".elser_model_1"
           },
+          "num_results": {
+            "type": "string",
+            "title": "Num Results",
+            "default": "5"
+          },
           "es_model_text_field": {
             "type": "string",
             "title": "Es Model Text Field",
@@ -643,28 +302,24 @@
           },
           "llm_instructions": {
             "type": "string",
-            "title": "LLM Instructions",
             "description": "Instructions for LLM",
-            "default": "[INST]<<SYS>>You are a helpful, respectful, and honest assistant. Always answer as helpfully as possible, while being safe. Be brief in your answers. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don\\'''t know the answer to a question, please do not share false information. <</SYS>>\nGenerate the next agent response by answering the question. You are provided several documents with titles. If the answer comes from different documents please mention all possibilities and use the tiles of documents to separate between topics or domains. Answer with no more than 150 words. If you cannot base your answer on the given document, please state that you do not have an answer.\n{context_str}<</SYS>>\n\n{query_str} Answer with no more than 150 words. If you cannot base your answer on the given document, please state that you do not have an answer. [/INST]"
-          },
-          "num_results": {
-            "type": "string",
-            "title": "Num Results",
-            "default": "5"
+            "title": "LLM Instructions"
           },
           "llm_params": {
-            "$ref": "#/components/schemas/customTypes__queryLLMRequest__LLMParams"
+            "$ref": "#/components/schemas/LLMParams"
           },
           "filters": {
             "type": "object",
-            "title": "Filters",
             "example": {
               "date": "2022-01-01",
               "file_name": "test.pdf"
-            }
+            },
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Filters"
           }
         },
-        "type": "object",
         "required": [
           "question",
           "es_index_name"
@@ -672,20 +327,20 @@
         "title": "queryLLMRequest"
       },
       "queryLLMResponse": {
+        "type": "object",
         "properties": {
           "llm_response": {
             "type": "string",
             "title": "Llm Response"
           },
           "references": {
+            "type": "array",
             "items": {
               "type": "object"
             },
-            "type": "array",
             "title": "References"
           }
         },
-        "type": "object",
         "required": [
           "llm_response",
           "references"
@@ -693,6 +348,7 @@
         "title": "queryLLMResponse"
       },
       "queryWDLLMRequest": {
+        "type": "object",
         "properties": {
           "question": {
             "type": "string",
@@ -713,8 +369,11 @@
           },
           "wd_return_params": {
             "type": "array",
-            "title": "Wd Return Params",
+            "items": {
+              "type": "string"
+            },
             "description": "Params to pull from WD. Defaults Title and Text.",
+            "title": "Wd Return Params",
             "default": [
               "Title",
               "Text"
@@ -722,8 +381,8 @@
           },
           "llm_instructions": {
             "type": "string",
-            "title": "LLM Instructions",
             "description": "Instructions for LLM",
+            "title": "LLM Instructions",
             "default": "[INST]<<SYS>>You are a helpful, respectful, and honest assistant. Always answer as helpfully as possible, while being safe. Be brief in your answers. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don\\'''t know the answer to a question, please do not share false information. <</SYS>>\nGenerate the next agent response by answering the question. You are provided several documents with titles. If the answer comes from different documents please mention all possibilities and use the tiles of documents to separate between topics or domains. Answer with no more than 150 words. If you cannot base your answer on the given document, please state that you do not have an answer.\n{context_str}<</SYS>>\n\n{query_str} Answer with no more than 150 words. If you cannot base your answer on the given document, please state that you do not have an answer. [/INST]"
           },
           "num_results": {
@@ -732,18 +391,20 @@
             "default": "5"
           },
           "llm_params": {
-            "$ref": "#/components/schemas/customTypes__queryWDLLMRequest__LLMParams"
+            "$ref": "#/components/schemas/LLMParams"
           },
           "wd_document_names": {
             "type": "array",
-            "title": "Wd Document Names",
+            "items": {
+              "type": "string"
+            },
             "example": [
               "acme.pdf",
               "test.docx"
-            ]
+            ],
+            "title": "Wd Document Names"
           }
         },
-        "type": "object",
         "required": [
           "question",
           "project_id",
@@ -752,48 +413,25 @@
         "title": "queryWDLLMRequest"
       },
       "queryWDLLMResponse": {
+        "type": "object",
         "properties": {
           "llm_response": {
             "type": "string",
             "title": "Llm Response"
           },
           "references": {
+            "type": "array",
             "items": {
               "type": "object"
             },
-            "type": "array",
             "title": "References"
           }
         },
-        "type": "object",
         "required": [
           "llm_response",
           "references"
         ],
         "title": "queryWDLLMResponse"
-      },
-      "texttosqlRequest": {
-        "properties": {
-          "question": {
-            "type": "string",
-            "title": "NL Question",
-            "description": "Question asked by the user."
-          },
-          "dbtype": {
-            "type": "string",
-            "title": "Database Type",
-            "description": "Database Type for Text To SQL"
-          },
-          "llm_params": {
-            "$ref": "#/components/schemas/customTypes__texttosqlRequest__LLMParams"
-          }
-        },
-        "type": "object",
-        "required": [
-          "question",
-          "dbtype"
-        ],
-        "title": "texttosqlRequest"
       },
       "watsonchatRequest": {
         "properties": {
@@ -842,16 +480,16 @@
             "default": "5"
           },
           "sqlllm_params": {
-            "$ref": "#/components/schemas/customTypes__watsonchatRequest__LLMParams"
+            "$ref": "#/components/schemas/LLMParams"
           },
           "classifyllm_params": {
-            "$ref": "#/components/schemas/customTypes__watsonchatRequest__LLMParams"
+            "$ref": "#/components/schemas/LLMParams"
           },
           "ragllm_params": {
-            "$ref": "#/components/schemas/customTypes__watsonchatRequest__LLMParams"
+            "$ref": "#/components/schemas/LLMParams"
           },
           "generalllm_params": {
-            "$ref": "#/components/schemas/customTypes__watsonchatRequest__LLMParams"
+            "$ref": "#/components/schemas/LLMParams"
           }
         },
         "type": "object",
@@ -862,13 +500,6 @@
           "user_id"
         ],
         "title": "watsonchatRequest"
-      }
-    },
-    "securitySchemes": {
-      "APIKeyHeader": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "RAG-APP-API-Key"
       }
     }
   }
