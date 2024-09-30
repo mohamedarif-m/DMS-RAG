@@ -638,13 +638,13 @@ async def watsonchat(request: watsonchatRequest, api_key: str = Security(get_api
     ragllm_params = request.ragllm_params
     generalllm_params = request.generalllm_params
 
-    watsonxClassifyResponse = watsonx (query,"promptClassify", classifyllm_params)
+    watsonxClassifyResponse = watsonx (query,"promptClassify", classifyllm_params).lower()
     classify = [{'Classify': watsonxClassifyResponse}]
     classification = ""
 
     print ("Classify Response: " + watsonxClassifyResponse)
 
-    if "RAG" in watsonxClassifyResponse:
+    if "rag" in watsonxClassifyResponse:
 
         moderations = Moderations (hap_input=ragllm_params.parameters.moderations.hap_input,
                                    hap_output=ragllm_params.parameters.moderations.hap_output,
@@ -668,7 +668,7 @@ async def watsonchat(request: watsonchatRequest, api_key: str = Security(get_api
         queryLLMresponse= await queryLLM(queryLLMRequestInstance, api_key)
         return watsonchatResponse(response=queryLLMresponse.llm_response)
 
-    elif "Text2SQL" in watsonxClassifyResponse:
+    elif "text2sql" in watsonxClassifyResponse:
 
         moderations = Moderations (hap_input=sqlllm_params.parameters.moderations.hap_input,
                                    hap_output=sqlllm_params.parameters.moderations.hap_output,
