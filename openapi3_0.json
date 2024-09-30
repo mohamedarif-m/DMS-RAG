@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://dms-text2sql-jsonupdated.1lnqlhl9zx33.us-south.codeengine.appdomain.cloud/"
+      "url": "https://dms-poc.1mcuhuf8lfls.us-south.codeengine.appdomain.cloud"
     }
   ],
   "paths": {
@@ -17,7 +17,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/watsonchatResponse"
+                }
               }
             },
             "description": "Successful Response"
@@ -346,6 +348,19 @@
           "references"
         ],
         "title": "queryLLMResponse"
+      },
+      "watsonchatResponse": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "type": "string",
+            "title": "Llm Response"
+          }
+        },
+        "required": [
+          "response"
+        ],
+        "title": "watsonchatResponse"
       },
       "queryWDLLMRequest": {
         "type": "object",
