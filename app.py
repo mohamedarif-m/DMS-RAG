@@ -346,7 +346,7 @@ async def queryLLM(request: queryLLMRequest, api_key: str = Security(get_api_key
         )
         
         query_engine = index.as_query_engine(
-            text_qa_template=prompt_template,
+            #text_qa_template=prompt_template,
             similarity_top_k=num_results,
             vector_store_query_mode="sparse",
             vector_store_kwargs={
@@ -355,7 +355,7 @@ async def queryLLM(request: queryLLMRequest, api_key: str = Security(get_api_key
         )
     else:
         query_engine = index.as_query_engine(
-            text_qa_template=prompt_template,
+            #text_qa_template=prompt_template,
             similarity_top_k=num_results,
             vector_store_query_mode="sparse",
             vector_store_kwargs={
