@@ -714,7 +714,7 @@ async def watsonchat(request: watsonchatRequest, api_key: str = Security(get_api
             queryLLMresponse= await queryLLM(queryLLMRequestInstance, api_key)
             return watsonchatResponse(response=queryLLMresponse.llm_response)
 
-        watsonxRephrasedResponse = watsonx(query+","+texttoxqlresponse.response,"promptJSON", llmparams)
+        watsonxRephrasedResponse = watsonx(query+","+texttoxqlresponse.response,"promptJSON", llmparams).replace("Output: ", "")
         return watsonchatResponse(response=watsonxRephrasedResponse)
     else:
 
